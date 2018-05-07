@@ -3,6 +3,17 @@ import Vapor
 
 /// Called before your application initializes.
 public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
+    // Serve the app on 0.0.0.0 to make it accessible on other computers in the same network.
+    if env == .development {
+        services.register(Server.self) { container -> NIOServer in
+            var serverConfig = try container.make() as NIOServerConfig
+            serverConfig.port = 8080
+            serverConfig.hostname = "0.0.0.0"
+            let server = NIOServer(config: serverConfig, container: container)
+            return server
+        }
+    }
+    
     /// Register providers first
     try services.register(FluentSQLiteProvider())
 
@@ -27,7 +38,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
 
     /// Configure migrations
     var migrations = MigrationConfig()
-    migrations.add(model: Todo.self, database: .sqlite)
+    migrations.add(model: Acronym.self, database: .sqlite)
     services.register(migrations)
 
 }
