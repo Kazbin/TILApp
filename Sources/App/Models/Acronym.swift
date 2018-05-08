@@ -1,7 +1,7 @@
 import Vapor
 import FluentPostgreSQL
 
-final class Acronym: Content, PostgreSQLModel, Migration {
+final class Acronym: Content, PostgreSQLModel, Migration, Parameter {
     var id: Int?
     var short: String
     var long: String
@@ -11,5 +11,3 @@ final class Acronym: Content, PostgreSQLModel, Migration {
         self.long = long
     }
 }
-
-
