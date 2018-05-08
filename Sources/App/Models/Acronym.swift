@@ -1,7 +1,7 @@
 import Vapor
-import FluentSQLite
+import FluentPostgreSQL
 
-final class Acronym: Content, SQLiteModel, Migration {
+final class Acronym: Content, PostgreSQLModel, Migration {
     var id: Int?
     var short: String
     var long: String
@@ -12,4 +12,4 @@ final class Acronym: Content, SQLiteModel, Migration {
     }
 }
 
-/// extension Acronym: SQLiteModel {}
+
